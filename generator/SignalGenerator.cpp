@@ -4,7 +4,7 @@
 
 SignalGenerator::SignalGenerator()
 {
-    amplitude = 1.0;
+    amplitude = 1.0;     
     frequency = 10.0;
     phase = 0.0;
 }
@@ -28,17 +28,17 @@ std::vector<double> SignalGenerator::generateSamples(
 
     constexpr double PI = 3.14159265358979323846;
 
-    for (int i = 0; i < numberOfSamples; i++)
+    const double phaseIncrement =
+        2.0 * PI * frequency / sampleRate;
+
+    for (int i = 0; i < numberOfSamples; ++i)
     {
         double value =
-            amplitude * std::sin(2.0 * PI * frequency *
-                                 (static_cast<double>(i) / sampleRate) +
-                                 phase);
+            amplitude * std::sin(phase);
 
         samples.push_back(value);
 
-        // حفظ پیوستگی فاز موج
-        phase += 2.0 * PI * frequency / sampleRate;
+        phase += phaseIncrement;
 
         if (phase >= 2.0 * PI)
         {

@@ -36,7 +36,6 @@ bool SharedSemaphore::create()
     {
         semaphore = nullptr;
 
-        // اگر قبلاً وجود داشته، بازش کن
         semaphore = sem_open(
             name,
             0

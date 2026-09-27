@@ -8,15 +8,15 @@
 
 int main()
 {
-    // =========================
+    
     // Create signal generator
-    // =========================
+    
 
     SignalGenerator generator;
 
-    // =========================
+    
     // Create shared memory
-    // =========================
+    
 
     SharedMemory sharedMemory(
         "/sine_shared_memory"
@@ -31,9 +31,9 @@ int main()
         return 1;
     }
 
-    // =========================
+    
     // Create semaphore
-    // =========================
+    
 
     SharedSemaphore semaphore(
         "/sine_semaphore"
@@ -48,22 +48,21 @@ int main()
         return 1;
     }
 
-    // =========================
+    
     // Get shared data
-    // =========================
+    
 
     SharedData* data =
         sharedMemory.data();
 
-    // =========================
+    
     // Signal parameters
-    // =========================
+    
 
-    double sampleRate = 1000.0;
-
-    // =========================
+    double sampleRate = 20000.0;
+    
     // Initialize shared memory
-    // =========================
+    
 
     semaphore.lock();
 
@@ -79,15 +78,15 @@ int main()
         << "Shared memory created."
         << std::endl;
 
-    // =========================
+    
     // Main generation loop
-    // =========================
+    
 
     while (true)
     {
-        // =========================
+        
         // Read parameters
-        // =========================
+        
 
         semaphore.lock();
 
@@ -102,9 +101,9 @@ int main()
 
         semaphore.unlock();
 
-        // =========================
+        
         // Check running state
-        // =========================
+        
 
         if (!running)
         {
@@ -115,9 +114,9 @@ int main()
             continue;
         }
 
-        // =========================
+        
         // Update generator
-        // =========================
+        
 
         generator.setFrequency(
             frequency
@@ -127,19 +126,19 @@ int main()
             amplitude
         );
 
-        // =========================
+        
         // Generate samples
-        // =========================
+        
 
         auto samples =
             generator.generateSamples(
-                100,
+                1024,
                 sampleRate
             );
 
-        // =========================
+        
         // Write samples
-        // =========================
+        
 
         semaphore.lock();
 
@@ -156,9 +155,9 @@ int main()
 
         semaphore.unlock();
 
-        // =========================
+        
         // Debug output
-        // =========================
+        
 
         std::cout
             << "Generated: "
@@ -170,9 +169,9 @@ int main()
             << amplitude
             << std::endl;
 
-        // =========================
+        
         // Small delay
-        // =========================
+        
 
         std::this_thread::sleep_for(
             std::chrono::milliseconds(100)
