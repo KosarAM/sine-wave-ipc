@@ -193,4 +193,4 @@ Then, from another terminal, start the Qt application:
 
 ## Author
 
-**Kosar Asadmasjedi — GitHub**
+**Kosar Asadmasjedi — [GitHub](https://github.com/KosarAM)**
